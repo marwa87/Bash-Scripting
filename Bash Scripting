@@ -1,0 +1,38 @@
+Write a bash script that organize a given directory. We have directory containing: music, videos, images, logs and perhaps other files. My task is to organize files into categories and get rid of some of them, after the script has made change, the directory should appear as follows:
+-	Anew directory “music” should contain all files with “mp3” and “flac” extension
+-	Anew directory ”images” should contain all files with “jpg” and “png” extension
+-	Anew directory ”videos” should contain all files with “avi” and “mov” extension
+-	Anew directory ”images” should contain all files with “jpg” and “png” extension
+All files with the “.log” extension should be removed, other files not already mentioned in this list must not be changed
+
+
+
+#!/bin/bash
+
+dir="./"
+
+for file in *
+do
+extension="${file#*.}"
+echo $file
+echo $extension
+if [ $extension == "mp3" ] || [ $extension == "flac" ];
+then
+music_directory="music"
+mkdir -p $music_directory
+mv $file $music_directory
+elif [ $extension == "jpg" ] || [ $extension == "png" ];
+then
+image_directory="images"
+mkdir -p $image_directory
+mv $file $image_directory
+elif [ $extension == "avi" ] || [ $extension == "mov" ];
+then
+videos_directory="videos"
+mkdir -p $videos_directory
+mv $file $videos_directory
+elif [ $extension == "log" ];
+then
+rm $file
+fi
+done
